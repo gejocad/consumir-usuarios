@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Heroes from './components/Heroes';
 import AppRouter from './routers/AppRouter';
 
 ReactDOM.render(

@@ -1,14 +1,10 @@
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  Redirect
+  Route
 } from "react-router-dom";
 import React, { Component } from 'react'
-import Login from '../components/Login';
-import Registro from '../components/Registro';
-import Heroes from '../components/Heroes';
+import Usuarios from '../components/Usuarios';
 import '../styles/styles.css';
 
 
@@ -19,11 +15,8 @@ export default class AppRouter extends Component {
         return (
            <Router>
                <Switch>
-                  <Route exact path="/" component={Login}/>
-                  <Route exact path="/Registro" component={Registro}/>
-                  <Route exact path="/Heroes" component={Heroes}/>
+                  <Route exact path="/Usuarios" component={Usuarios}/>
                </Switch>
-               <Redirect to="/" />
            </Router>
         )
     }

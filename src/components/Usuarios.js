@@ -1,30 +1,30 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import { Component } from 'react';
-import {fileUpload} from '../helpers/fileUpload';
 
 const url = "https://jsonplaceholder.typicode.com/users";
 
 
-class Heroes extends Component {
+class Usuarios extends Component {
 
     state = {
         data: [],
-        modalInsertar: false,
-        modalEliminar: false,
         form: {
             id: '',
             name: '',
-            superhero: '',
-            publisher: '',
-            alter_ego: '',
-            first_appearance: '',
-            image: '',
-            tipoModal: ''
+            username: '',
+            address: {
+                street:'',
+                suite:'',
+                city:'',
+                zipcode:''
+
+            }
         }
+        
     }
 
     componentDidMount() {
@@ -74,19 +74,7 @@ class Heroes extends Component {
         this.setState({modalInsertar: !this.state.modalInsertar})
     }
 
-    handlePictureClick = () => {
-        document.querySelector('#fileSelector').click();
-    }
 
-   handleFileChange = (e) => {
-        const file = e.target.files[0];
-        fileUpload(file).then(response => {
-            document.getElementById('image').value = response;
-            console.log(response);  
-        }).catch(error => {
-            console.log(error.message);
-        })      
-  }
           
   handleChange = async (e) => {
      e.persist();
@@ -122,40 +110,36 @@ class Heroes extends Component {
         const {form} = this.state;
         return (
             <div className="container">
-                <br />
-                <button className="btn btn-success"
-                onClick={() => {this.setState({form: null, tipoModal:'insertar'});this.modalInsertar()}}>Agregar Heroe</button>
+
                 <br /> <br />
                 <table className="table">
                     <thead>
                         <tr>
                             <th>id</th>
                             <th>name</th>
-                            <th>superhero</th>
-                            <th>publisher</th>
-                            <th>alter_ego</th>
-                            <th>first_appearance</th>
-                            <th>image</th>
-                            <th>Operaciones</th>
+                            <th>username</th>
+                            <th>email</th>
+                            <th>street</th>
+                            <th>suite</th>
+                            <th>city</th>
+                            <th>zipcode</th>
                         </tr>
                     </thead>
                     <tbody>
                         {
-                            this.state.data.map(heroe => {
+                            this.state.data.map(users => {
                                 return (
                                     <tr>
-                                         <td>{heroe.id}</td>
-                                         <td>{heroe.name}</td>
-                                         <td>{heroe.superhero}</td>
-                                         <td>{heroe.publisher}</td>
-                                         <td>{heroe.alter_ego}</td>
-                                         <td>{heroe.first_appearance}</td>
-                                         <td><img src={heroe.image} width="50px"/></td>
+                                         <td>{users.id}</td>
+                                         <td>{users.name}</td>
+                                         <td>{users.username}</td>
+                                         <td>{users.email}</td>
+                                         <td>{users.address.street}</td>
+                                         <td>{users.address.suite}</td>
+                                         <td>{users.address.city}</td>
+                                         <td>{users.address.zipcode}</td>
                                          <button className="btn btn-primary"
-                                         onClick={() => {this.seleccionarHeroe(heroe);this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
-                                         {" "}
-                                         <button className="btn btn-danger"
-                                         onClick={() => {this.seleccionarHeroe(heroe);this.setState({modalEliminar:true})}}><FontAwesomeIcon icon={faTrashAlt}/></button>
+                                         onClick={() => {this.seleccionarHeroe(users);this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                                     </tr>
                                 )
                             })
@@ -177,16 +161,19 @@ class Heroes extends Component {
                             <input className="form-control" type="text" name="name" id="name" onChange={this.handleChange} value={form?form.name:''}/>
                             <br/>
                             <label htmlFor="superhero">superhero</label>
-                            <input className="form-control" type="text" name="superhero" id="superhero" onChange={this.handleChange} value={form?form.superhero:''}/>
+                            <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username:''}/>
                             <br/>
                             <label htmlFor="publisher">publisher</label>
-                            <input className="form-control" type="text" name="publisher" id="publisher" onChange={this.handleChange} value={form?form.publisher:''}/>
+                            <input className="form-control" type="text" name="street" id="street" onChange={this.handleChange} value={form?form.address.street:''}/>
                             <br/>
                             <label htmlFor="alter_ego">alter_ego</label>
-                            <input className="form-control" type="text" name="alter_ego" id="alter_ego" onChange={this.handleChange} value={form?form.alter_ego:''}/>
+                            <input className="form-control" type="text" name="suite" id="suite" onChange={this.handleChange} value={form?form.address.suite:''}/>
                             <br/>
                             <label htmlFor="first_appearance">first_appearance</label>
-                            <input className="form-control" type="text" name="first_appearance" id="first_appearance" onChange={this.handleChange} value={form?form.first_appearance:''}/>
+                            <input className="form-control" type="text" name="city" id="city" onChange={this.handleChange} value={form?form.address.city:''}/>
+                            <br/>
+                            <label htmlFor="first_appearance">first_appearance</label>
+                            <input className="form-control" type="text" name="zipcode" id="zipcode" onChange={this.handleChange} value={form?form.address.zipcode:''}/>
                             <br/>
                             <input 
                             id="fileSelector"
@@ -208,20 +195,6 @@ class Heroes extends Component {
                         </div>
 
                     </ModalBody>
-                    <ModalFooter>
-                        {this.state.tipoModal=='insertar'}
-                        <button className="btn btn-success" onClick={() => this.peticionesPost()}>
-                            Insertar
-                        </button>
-                        <button className="btn btn-primary"
-                        onClick={() => this.peticionesPut()}>
-                            Actualizar
-                        </button>
-                        <button className="btn btn-danger"
-                           onClick={() => this.modalInsertar()}>
-                            Cancelar
-                        </button>
-                    </ModalFooter>
                 </Modal>
 
                 <Modal isOpen={this.state.modalEliminar}>
@@ -240,4 +213,4 @@ class Heroes extends Component {
     }
 }
 
-export default Heroes;
+export default Usuarios;
