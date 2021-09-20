@@ -160,19 +160,19 @@ class Usuarios extends Component {
                             <label htmlFor="name">name</label>
                             <input className="form-control" type="text" name="name" id="name" onChange={this.handleChange} value={form?form.name:''}/>
                             <br/>
-                            <label htmlFor="superhero">superhero</label>
+                            <label htmlFor="username">username</label>
                             <input className="form-control" type="text" name="username" id="username" onChange={this.handleChange} value={form?form.username:''}/>
                             <br/>
-                            <label htmlFor="publisher">publisher</label>
+                            <label htmlFor="street">street</label>
                             <input className="form-control" type="text" name="street" id="street" onChange={this.handleChange} value={form?form.address.street:''}/>
                             <br/>
-                            <label htmlFor="alter_ego">alter_ego</label>
+                            <label htmlFor="suite">suite</label>
                             <input className="form-control" type="text" name="suite" id="suite" onChange={this.handleChange} value={form?form.address.suite:''}/>
                             <br/>
-                            <label htmlFor="first_appearance">first_appearance</label>
+                            <label htmlFor="city">city</label>
                             <input className="form-control" type="text" name="city" id="city" onChange={this.handleChange} value={form?form.address.city:''}/>
                             <br/>
-                            <label htmlFor="first_appearance">first_appearance</label>
+                            <label htmlFor="zipcode">zipcode</label>
                             <input className="form-control" type="text" name="zipcode" id="zipcode" onChange={this.handleChange} value={form?form.address.zipcode:''}/>
                             <br/>
                             <input 
