@@ -91,17 +91,18 @@ class Usuarios extends Component {
   }
     
   //seleccionar heroe
-  seleccionarHeroe=(heroe)=>{
+  seleccionarUsuario=(data)=>{
       this.setState({
           tipoModal: 'actualizar',
           form: {
-              id: heroe.id,
-              name: heroe.name,
-              superhero: heroe.superhero,
-              publisher: heroe.publisher,
-              alter_ego: heroe.alter_ego,
-              first_appearance: heroe.first_appearance,
-              image: heroe.image,
+              id: data.id,
+              name: data.name,
+              username: data.username,
+              email: data.email,
+              street: data.address.street,
+              suite: data.addreess.suite,
+              city: data.addreess.city,
+              zipcode: data.addreess.zipcode
           }
       })
   }
@@ -139,7 +140,7 @@ class Usuarios extends Component {
                                          <td>{users.address.city}</td>
                                          <td>{users.address.zipcode}</td>
                                          <button className="btn btn-primary"
-                                         onClick={() => {this.seleccionarHeroe(users);this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
+                                         onClick={() => {this.seleccionarUsuario(users);this.modalInsertar()}}><FontAwesomeIcon icon={faEdit}/></button>
                                     </tr>
                                 )
                             })
@@ -175,22 +176,6 @@ class Usuarios extends Component {
                             <label htmlFor="zipcode">zipcode</label>
                             <input className="form-control" type="text" name="zipcode" id="zipcode" onChange={this.handleChange} value={form?form.address.zipcode:''}/>
                             <br/>
-                            <input 
-                            id="fileSelector"
-                            type="file"
-                            name="file"
-                            style={{ display: 'none' }}
-                            onChange={this.handleFileChange}/>
-
-                            <button className="btn btn-success"
-                            onClick={() => this.handlePictureClick()}>Imagen</button>
-
-                            <input 
-                            type="text"
-                            name="image"
-                            id="image"
-                            value={form?form.image:''}
-                            onBlur={this.handleChange}/>
 
                         </div>
 
@@ -199,7 +184,7 @@ class Usuarios extends Component {
 
                 <Modal isOpen={this.state.modalEliminar}>
                     <ModalBody>
-                        Está seguro de eliminar el superheroe {form && form.superhero}
+                        Está seguro de eliminar el usuario {form && form.username}
                     </ModalBody>
                     <ModalFooter>
                         <button className="btn btn-danger"
