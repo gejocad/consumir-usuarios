@@ -15,7 +15,7 @@ export default class AppRouter extends Component {
         return (
            <Router>
                <Switch>
-                  <Route exact path="/Usuarios" component={Usuarios}/>
+                  <Route exact path="/" component={Usuarios}/>
                </Switch>
            </Router>
         )
